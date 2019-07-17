@@ -1,5 +1,8 @@
 package com.example.android.foodrecipes;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import com.example.android.foodrecipes.requests.ServiceGenerator;
 import com.example.android.foodrecipes.requests.responses.RecipeResponse;
 import com.example.android.foodrecipes.requests.responses.RecipeSearchResponse;
 import com.example.android.foodrecipes.util.Constants;
+import com.example.android.foodrecipes.viewmodels.RecipeListViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,15 +27,21 @@ import retrofit2.Response;
 public class RecipeListActivity extends BaseActivity {
 
     private static final String TAG = "RecipeListActivity";
+    private RecipeListViewModel mRecipeListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+        mRecipeListViewModel = ViewModelProviders.of(this).get(RecipeListViewModel.class);
+        subscribeObservers();
+    }
+
+    private void subscribeObservers(){
+        mRecipeListViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
-            public void onClick(View v) {
-                testRetrofitRequest();
+            public void onChanged(@Nullable List<Recipe> recipes) {
+
             }
         });
     }

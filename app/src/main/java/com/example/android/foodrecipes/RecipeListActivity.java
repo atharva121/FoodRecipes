@@ -20,6 +20,7 @@ import com.example.android.foodrecipes.requests.responses.RecipeResponse;
 import com.example.android.foodrecipes.requests.responses.RecipeSearchResponse;
 import com.example.android.foodrecipes.util.Constants;
 import com.example.android.foodrecipes.util.Testing;
+import com.example.android.foodrecipes.util.VerticalSpacingItemDecorator;
 import com.example.android.foodrecipes.viewmodels.RecipeListViewModel;
 
 import java.io.IOException;
@@ -66,6 +67,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     private void initRecyclerView(){
         mAdapter = new RecipeRecyclerAdapter(this);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
+        mRecyclerView.addItemDecoration(itemDecorator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
